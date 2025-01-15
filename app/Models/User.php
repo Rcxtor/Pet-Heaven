@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'number',
+        'address_line',
+        'state',
+        'city',
+        'age',
     ];
 
     /**
@@ -44,5 +49,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function pets()
+    {
+        return $this->hasMany(Pet::class); // A user can have many pets
     }
 }
