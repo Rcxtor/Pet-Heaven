@@ -8,10 +8,9 @@
 </head>
 <body>
     <header>@include('layouts.navigation')</header>
-    
     <main>
         {{ $slot }} <!-- Dynamic content passed to the component -->
     </main>
-    <footer>Footer Content</footer>
+    <footer>Footer Content</footer> <!-- Footer: Contact details, social media links, and important links (terms, privacy policy, FAQs). -->
 </body>
 </html>
