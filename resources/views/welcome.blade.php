@@ -1,30 +1,36 @@
 <x-app-layout>
+<link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 
-@if (Route::has('login'))
-                                @auth
-                                    <a
-                                        href="{{ url('/dashboard') }}"
-                                        >
-                                        Dashboard
-                                    </a>
-                                @else
-                                    <a
-                                        href="{{ route('login') }}"
-                                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                    >
-                                        Log in
-                                    </a>
+<div class="top-banner">
+    <img src="/images/cover.jpg" alt="top-banner" >
+    <div class="top-banner-content">
+        <h1>Find Your Furry Friend Today!</h1>
+        <a href="">Browse Pets</a>
+    </div> 
+</div>
 
-                                    @if (Route::has('register'))
-                                        <a
-                                            href="{{ route('register') }}"
-                                        >
-                                            Register
-                                        </a>
-                                    @endif
-                                @endauth
-                        @endif
-                        <h1>HELLO</h1>
+<div class="mission-banner">
 
+<h1>"Pet Heaven connects pets in need with people looking to adopt. Our platform makes it easy to find, adopt, and provide a loving home for animals."
+Include a photo or illustration of happy pets with their adoptive families."</h1>
+</div>
+
+<div class="success-banner">
+Content:
+    Highlight stories of successful adoptions with quotes and photos of pets and their new families.
+    Example:
+    "Adopting Luna was the best decision I ever made. She's brought so much joy to my life!" - Sarah
+    
+    Include a button: Share Your Story.
+</div>
+
+<!-- <div class="feature-banner">
+Content:
+
+A section displaying a few featured pets (e.g., latest additions or most popular pets).
+Include photos, names, and a brief description of each pet (age, breed, location).
+    
+A button to view more pets: See All Pets.
+</div> -->
 </x-app-layout>
 
