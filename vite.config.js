@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '192.168.0.193',
+        port: 5173,
+        strictPort: true,
+        proxy: {
+            '/api': 'http://192.168.0.193:8000', // Proxy API calls to Laravel's backend
+        },
+    },
 });

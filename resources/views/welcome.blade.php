@@ -1,5 +1,7 @@
 <x-app-layout>
-<link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('css/welcome.css') }}"> -->
+@vite(['resources/css/welcome.css'])
+
 
 <div class="top-banner">
     <img src="/images/cover.jpg" alt="top-banner" >
