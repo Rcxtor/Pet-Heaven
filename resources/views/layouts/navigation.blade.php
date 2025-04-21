@@ -3,23 +3,19 @@
     <div class="nav-logo">
         <a href="{{route("welcome")}}"> <img src="/images/logo.png" alt="Logo"></a>
     </div>
+    <div class="nav-search">
+        <input placeholder="Find Your Pal..." id="input" class="nav-search-input" name="text" type="text">
+        <button class="nav-search-button">&#128269;</button>
+    </div>
     <div class="nav-link">
         <a href="{{route("welcome")}}">Home</a>
         <a href="">Browse Pet</a>
         <a href="">Contact</a>
-    </div>
-    <div class="nav-search">
-        <input placeholder="Search.." id="input" class="nav-search-input" name="text" type="text">
-        <button class="nav-search-button">&#128269;</button>
-    </div>
-    <div class="post-link">
         <a href="">Post A Pet</a>
-    </div>
-    
+    </div>    
     <div class="auth-link">
-        <!-- <a href="">Login</a>
-        <a href="">Register</a>
-        <a href="">Dashboard</a> -->
+        <a id="auth-toggle">☰</a>
+        <div class="auth-link-dropdown" id="auth-dropdown">
         @if (Route::has('login'))
             @auth
                 <a href="{{route('profile.edit') }}">Profile</a>
@@ -40,8 +36,28 @@
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}">Register</a>
                 @endif
-            @endauth
+            @endauth 
         @endif
+        </div>
+        
     </div>
                             
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('auth-toggle');
+        const dropdown = document.getElementById('auth-dropdown');
+
+        toggleBtn.addEventListener('click', function () {
+            dropdown.classList.toggle('show');
+        });
+
+        // Optional: Hide dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    });
+</script>
