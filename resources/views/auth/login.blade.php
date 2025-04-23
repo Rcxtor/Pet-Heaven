@@ -1,4 +1,5 @@
 <x-app-layout>
+@vite(['resources/css/auth.css'])
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

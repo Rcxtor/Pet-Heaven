@@ -34,7 +34,7 @@ body {
 /* --- Nav Bar --- */
 nav {
     background-color: rgb(16, 46, 80);    
-    min-height: 8vh;
+    min-height: 10vh;
     width: 100%;
     font-size: clamp(16px, 2vw, 18px);
     display: flex;
@@ -121,11 +121,19 @@ nav a
     flex-direction: column;
     flex: 0.5;
     margin-left: 1.5vw;
+    /* border: 2px solid white; */
+}
+.auth-link a
+{
+    
+    margin-right: auto;
+    /* border: 2px solid white; */
 }
 .auth-link a:hover
 {
     color: rgb(253, 216, 95);
     /* transform: scale(1.1) translate(0, -0.5px); */
+    cursor: pointer;
 }
 .auth-link-dropdown
 {
@@ -135,8 +143,8 @@ nav a
     display: none;
     position: absolute;
     flex-direction: column;
-    right: 7rem;
-    top: 7vh;
+    right: 7vw; 
+    top: 7vh; 
     z-index: 999;
     gap: 0.6rem;
     padding: 0.4rem;
@@ -159,11 +167,85 @@ nav a
 
 footer
 {
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    background-color: rgb(129, 199, 132);
-    color: rgb(245, 245, 245);
-    min-height: 10.5vh;
+    box-shadow: 0 -2px 10px rgba(146, 146, 146, 0.3);
+    /* background-color: rgb(238, 186, 90); */
+    background-color: rgb(249, 240, 229);
+
+    color: rgb(16, 46, 80);
+    min-height: 30vh;
     width: 100%;
     font-size: clamp(16px, 2vw, 18px);
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+.how-it-work
+{   
+    flex: 1;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(16, 46, 80);
+    background-color: rgb(250, 245, 245);
+}
+.how-it-work h1
+{
+    /* border: 2px solid red; */
+    font-size: 2rem;
+    font-weight: 600;
+    color: rgb(16, 46, 80);
+
+}
+
+.steps
+{   
+    /* border: 2px solid red; */
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+    /* padding-top: 0.5rem; */
+}
+.info-banner
+{
+    flex: 2;
+    display: flex;
+    align-items: center;
+    color: rgb(16, 46, 80);
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 0 auto;
+}
+.info-banner h1
+{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.info-banner p
+{
+    font-size: 1rem;
+}
+.social-media
+{
+    /* border: 2px solid red; */
+    background-color: rgb(16, 46, 80);
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    /* justify-content: space-evenly; */
+    align-items: center;
+}
+.social-media img
+{
+    width: 65%;
+    height: 65%;
+    /* object-fit:contain; */
+    /* border: 2px solid red; */
+    display: flex;
+    padding: 0.2rem;
+    /* justify-content: center; */
+    /* align-items: center; */
+
 }
