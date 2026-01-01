@@ -1,3 +1,3 @@
 <x-app-layout>
-    this is the dashboard
+    <a href="{{ route('pets.create') }}">Post a Pet</a>
 </x-app-layout>

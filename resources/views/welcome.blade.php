@@ -9,7 +9,7 @@
         <h1 class="slogan">Find Your Pet Today!</h1>
         <div class="links">
             <a href="">Browse Pets</a>
-            <a href="">Post a Pet</a>
+            <a href="{{ route('pets.create') }}">Post a Pet</a>
         </div>
     </div> 
 </div>

@@ -33,17 +33,30 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            // 'role' => ['required', 'string', 'max:255'],
+            'number' => ['nullable', 'integer', 'unique:'.User::class],
+            'address_line' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'age' => ['nullable', 'integer', 'min:0'],
 
+        ]);
+        // dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            // 'role' => $request->role,
+            'number' => $request->number,
+            'address_line' => $request->address_line,
+            'state' => $request->state,
+            'city' => $request->city,
+            'age' => $request->age,
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        Auth::login($user); // need to add admin check later
 
         return redirect(route('dashboard', absolute: false));
     }

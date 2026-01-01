@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('species');
             $table->string('breed')->default('Unknown');
             $table->integer('age')->nullable();
-            $table->enum('size',['small','big','large']);
+            $table->enum('size',['small','medium','large'])->default('medium');
             $table->enum('gender', ['male', 'female']);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status',['Available','Adopted','Removed'])->nullable();
+            $table->enum('status',['available','adopted','removed'])->default('available');
             $table->timestamps();
         });
     }
