@@ -9,9 +9,9 @@
     </div>
     <div class="nav-link">
         <a href="{{route("welcome")}}">Home</a>
-        <a href="">Browse Pet</a>
-        <a href="">Contact</a>
-        <a href="">Post A Pet</a>
+        <a href="{{ route('pets.index') }}">Browse Pet</a>
+        <a href="#">Contact</a>
+        <a href="{{ route('pets.create') }}">Post A Pet</a>
     </div>    
     <div class="auth-link">
         <a id="auth-toggle">☰</a>
@@ -19,7 +19,7 @@
         @if (Route::has('login'))
             @auth
                 <a href="{{route('profile.edit') }}">Profile</a>
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a href="{{route('logout')}}" onclick="event.preventDefault();

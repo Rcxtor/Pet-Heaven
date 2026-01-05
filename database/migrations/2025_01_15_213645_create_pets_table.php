@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('age')->nullable();
             $table->enum('size',['small','medium','large'])->default('medium');
             $table->enum('gender', ['male', 'female']);
+            $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->enum('status',['available','adopted','removed'])->default('available');

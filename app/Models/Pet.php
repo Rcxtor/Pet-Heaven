@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pet extends Model
 {
     /**
      * The attributes that are mass assignable.
+     * 
      */
+    use HasFactory;
     protected $fillable = [
         'user_id','name','species','age','breed','description','user_id','status',     
     ];

@@ -9,11 +9,11 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '192.168.0.111',
+        host: '192.168.0.112',
         port: 5173,
         strictPort: true,
         proxy: {
-            '/api': 'http://192.168.0.111:8000', // Proxy API calls to Laravel's backend
+            '/api': 'http://192.168.0.112:8080', // Proxy API calls to Laravel's backend
         },
     },
 });
