@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\AdoptionController;
 
 
 
@@ -14,10 +15,13 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/pets/create', function() {return view('pets.create');})->name('pets.create');
-    route::post('/pets/create', [PetController::class, 'store'])->name('pets.store');        
+    route::post('/pets/create', [PetController::class, 'store'])->name('pets.store');  
+    route::get('adoption/apply/{pet}',[AdoptionController::class,'create'])->name('adoption.form');
+    route::post('adoption/pending',[AdoptionController::class,'store'])->name('adoption.submit');   
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () { // for admin only
+// for admin only
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () { 
     
     // Only admins can reach these URLs:
     
@@ -30,6 +34,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () { // fo
 //guest routes
 Route::get('/', function () {return view('welcome');})->name('welcome');
 route::get('/pets', [PetController::class, 'index'])->name('pets.index');
-Route::get('/pets/{id}', [PetController::class, 'show'])->name('pets.show');
+Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
 
 require __DIR__.'/auth.php';

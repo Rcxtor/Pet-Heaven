@@ -1,0 +1,10 @@
+need to update the adoption applications table
+
+need to add ❌ Owner cannot apply for their own pet
+
+❌ User can apply only once per pet
+
+🛡️ Admin approves / rejects
+
+🔒 Pet becomes unavailable after approval 
+

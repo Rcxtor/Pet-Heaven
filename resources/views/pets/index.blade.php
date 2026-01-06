@@ -5,7 +5,8 @@
         {{ $pet->age }} <br>
         {{ $pet->species }} <br><br>
         {{ $pet->user->name }} <br><br>
-        <a href="{{ route('pets.show', ['id' => $pet->id]) }}">View Pet Details</a><br> 
+
+        <a href="{{ route('pets.show', [$pet]) }}">{{ __('View Pet Details') }}</a><br> 
     ----------<br><br>
     @endforeach
 </x-app-layout>

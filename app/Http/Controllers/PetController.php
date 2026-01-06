@@ -67,9 +67,8 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Pet $pet)
     {
-        $pet = Pet::findOrFail($id);
         return view('pets.show', compact('pet'));
     }
 
