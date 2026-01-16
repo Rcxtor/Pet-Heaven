@@ -37,6 +37,10 @@
             </select>
         </div>
         <div>
+            <x-label for="location" :value="__('Location:')"/>
+            <input type="text" id="location" name="location" :value="old('location')" required>
+        </div>
+        <div>
             <x-label for="description" :value="__('Description:')"/>
             <textarea id="description" name="description" :value="old('description')" ></textarea>
         </div>

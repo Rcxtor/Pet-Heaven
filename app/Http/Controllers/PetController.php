@@ -36,6 +36,7 @@ class PetController extends Controller
             'name' => 'required|string|max:255',
             'species' => 'required|string|max:255',
             'breed' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
             'age' => 'nullable|integer|min:0',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
@@ -49,6 +50,7 @@ class PetController extends Controller
         $pet->breed = $request->breed;
         $pet->age = $request->age;
         $pet->size = $request->size;
+        $pet->location = $request->location;
         $pet->gender = $request->gender;
         $pet->description = $request->description;
 
@@ -61,7 +63,8 @@ class PetController extends Controller
         // Save the pet
         auth()->user()->pets()->save($pet);
 
-        return redirect()->route('pets.show', ['id' => $pet->id])->with('success', 'Pet created successfully.');
+        return redirect()->route('pets.show', [$pet])->with('success', 'Pet created successfully.');
+        // return redirect()->route('pets.show', ['pet->id'])->with('success', 'Pet created successfully.');
     }
 
     /**
@@ -69,7 +72,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        return view('pets.show', compact('pet'));
+        return view('pets.show', compact('pet'));  
     }
 
     /**

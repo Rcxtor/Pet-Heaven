@@ -1,4 +1,4 @@
-need to update the adoption applications table
+need to update the adoption applications table (DONE)
 
 need to add ❌ Owner cannot apply for their own pet
 

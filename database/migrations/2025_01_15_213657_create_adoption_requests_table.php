@@ -15,6 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('pet_id')->constrained()->onDelete('cascade');
+            $table->enum('exp',['yes','no']);
+            $table->string('email')->nullable();;
+            $table->string('name')->nullable();;
+            $table->integer('phone')->nullable();;
+
+            $table->string('address')->nullable();
+            $table->string('reason')->nullable();
             $table->enum('status',['Pending','Approved','Declined'])->default('Pending');
             $table->timestamps();
         });

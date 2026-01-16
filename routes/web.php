@@ -18,6 +18,9 @@ Route::middleware(['auth'])->group(function () {
     route::post('/pets/create', [PetController::class, 'store'])->name('pets.store');  
     route::get('adoption/apply/{pet}',[AdoptionController::class,'create'])->name('adoption.form');
     route::post('adoption/pending',[AdoptionController::class,'store'])->name('adoption.submit');   
+    route::get('adoption/pending/{adoption_request}',[AdoptionController::class,'show'])->name('adoption.pending');   
+    route::get('adoption/history/',[AdoptionController::class,'index'])->name('adoption.history');  // 
+
 });
 
 // for admin only

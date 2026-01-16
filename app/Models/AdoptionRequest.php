@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AdoptionRequest extends Model
 {
     protected $fillable = [
-      'pet_id','user_id','status'  
+      'pet_id','user_id','status','exp','email','name','phone','address','reason'  
     ];
 
 
