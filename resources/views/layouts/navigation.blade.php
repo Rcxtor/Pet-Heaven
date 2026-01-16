@@ -20,6 +20,7 @@
             @auth
                 <a href="{{route('profile.edit') }}">Profile</a>
                 <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('adoption.history') }}">Adoption Requests</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a href="{{route('logout')}}" onclick="event.preventDefault();
