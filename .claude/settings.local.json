@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(python3 -c ' *)",
+      "Bash(mkdir -p \"e:\\\\Pet-Heaven\\\\frontend\\\\src\\\\components\" \"e:\\\\Pet-Heaven\\\\frontend\\\\src\\\\pages\" \"e:\\\\Pet-Heaven\\\\frontend\\\\src\\\\services\" \"e:\\\\Pet-Heaven\\\\frontend\\\\src\\\\context\" \"e:\\\\Pet-Heaven\\\\frontend\\\\src\\\\assets\\\\styles\")"
+    ],
+    "additionalDirectories": [
+      "e:\\Pet-Heaven\\frontend\\src"
+    ]
+  }
+}
