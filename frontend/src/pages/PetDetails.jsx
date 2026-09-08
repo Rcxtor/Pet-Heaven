@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPet } from "../services/petService";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function ViewPet() {
     const { id } = useParams();
+    const { user } = useAuth();
 
     const [pet, setPet] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -57,6 +60,13 @@ function ViewPet() {
             <p><strong>Location:</strong> {pet.location}</p>
 
             <p><strong>Description:</strong> {pet.description}</p>
+
+            {/* Show only to the user who created the pet */}
+            {user && user.id === pet.user_id && (
+                <Link to={`/pet/${pet.id}/edit`}>
+                    <button>Edit Pet</button>
+                </Link>
+            )}
         </div>
     );
 }

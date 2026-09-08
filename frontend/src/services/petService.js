@@ -47,3 +47,40 @@ export async function getallPet() {
 
   return response.json();
 }
+
+export async function updatePet(id, formData) {
+    const response = await fetch(`${API_URL}/pet/${id}`,
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+
+            body: JSON.stringify(formData),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to update pet");
+    }
+
+    return response.json();
+}
+
+export async function deletePet(id) {
+    const response = await fetch(`${API_URL}/pet/${id}`, {
+        method: "DELETE",
+
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete pet");
+    }
+
+    return response.json();
+}

@@ -72,4 +72,62 @@ class PetController extends Controller
             'pet' => $pet,
         ], 201);
     }
+
+    /**
+     * Updade PEt
+     */
+    public function update(Request $request, Pet $pet)
+        {
+            // Only the user who created the pet can edit it
+            if ($pet->user_id != auth()->id()) {
+                return response()->json([
+                    'message' => 'Forbidden'
+                ], 403);
+            }
+
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'species' => 'required|string|max:255',
+                'breed' => 'nullable|string|max:255',
+                'location' => 'nullable|string|max:255',
+                'age' => 'nullable|integer|min:0',
+                'size' => 'required|in:small,medium,large',
+                'gender' => 'required|in:male,female',
+                'description' => 'nullable|string',
+            ]);
+
+            $pet->name = $validated['name'];
+            $pet->species = $validated['species'];
+            $pet->breed = $validated['breed'] ?? null;
+            $pet->location = $validated['location'] ?? null;
+            $pet->age = $validated['age'] ?? null;
+            $pet->size = $validated['size'];
+            $pet->gender = $validated['gender'];
+            $pet->description = $validated['description'] ?? null;
+
+            $pet->save();
+
+            return response()->json([
+                'message' => 'Pet updated successfully.',
+                'pet' => $pet,
+            ]);
+        }
+
+    /**
+     * DELETE BOOm
+     */
+    public function destroy(Pet $pet)
+    {
+        if ($pet->user_id !== auth()->id()) {
+            return response()->json([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $pet->delete();
+
+        return response()->json([
+            'message' => 'Pet deleted successfully'
+        ]);
+}
 }
