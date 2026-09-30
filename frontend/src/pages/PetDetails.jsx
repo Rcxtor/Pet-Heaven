@@ -62,10 +62,17 @@ function ViewPet() {
             <p><strong>Description:</strong> {pet.description}</p>
 
             {/* Show only to the user who created the pet */}
-            {user && user.id === pet.user_id && (
+            {user && user.id === pet.user_id && pet.status !== "adopted" && (
                 <Link to={`/pet/${pet.id}/edit`}>
                     <button>Edit Pet</button>
                 </Link>
+            )}
+
+            <br />
+            {user && user.id !== pet.user_id && (
+            <Link to={`/pet/${pet.id}/adoption-form`}>
+                <button>Apply For Adoption</button>
+            </Link>
             )}
         </div>
     );

@@ -7,6 +7,9 @@ import AddPet from "./pages/AddPet";
 import ViewPet from "./pages/PetDetails";
 import Pets from "./pages/Pets";
 import EditPet from "./pages/EditPet";
+import AdoptionForm from "./pages/Adoptions";
+import MyAdoptions from "./pages/MyAdoptions";
+import ReceivedAdoptions from "./pages/ReceivedAdoptions";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -24,6 +27,9 @@ function AppRoutes() {
                 {/* auth routes */}
                 <Route path="/addPet" element={ <ProtectedRoute>< AddPet/></ProtectedRoute> } />
                 <Route path="/pet/:id/edit" element={<ProtectedRoute><EditPet/></ProtectedRoute>} />
+                <Route path="/pet/:petId/adoption-form" element={<ProtectedRoute><AdoptionForm/></ProtectedRoute>} />
+                <Route path="/my-adoptions" element={<ProtectedRoute><MyAdoptions/></ProtectedRoute>} />
+                <Route path="/received-adoptions" element={<ProtectedRoute><ReceivedAdoptions/></ProtectedRoute>} />
 
 
                 {/* non-auth routes */}

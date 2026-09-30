@@ -7,17 +7,19 @@ export async function registerUser(userData) {
 
         headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
         },
 
         body: JSON.stringify(userData),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-        const errorData = await response.json();
-        throw errorData;
+        throw data;
     }
 
-    return response.json();
+    return data;
 }
 
 export async function loginUser(userData) {

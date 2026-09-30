@@ -33,6 +33,14 @@ function Navbar() {
                                 <button className="cursor-pointer " onClick={logout}>
                                     Logout
                                 </button>
+
+                                <Link to="/my-adoptions">
+                                    My Request
+                                </Link>
+                                
+                                <Link to="/received-adoptions">
+                                    Received Requests
+                                </Link>
                             </>
                         ) : (
                             <>

@@ -1,0 +1,48 @@
+About adoption 
+1. user cant adopt request own pets 
+2. Apply for Adoption
+────────────────────────────
+
+Do you have previous pet experience?
+
+( ) Yes
+( ) No
+
+Name:
+[________________________]
+
+Email:
+[________________________]
+
+Phone:
+[________________________]
+
+Address:
+[________________________]
+
+Why do you want to adopt this pet?
+
+[________________________]
+[________________________]
+[________________________]
+
+          [ Submit Application ]
+
+
+Adoption Request
+
+Pet: Max
+
+Applicant:
+John
+john@gmail.com
+017XXXXXXXX
+
+Experience: Yes
+
+Reason:
+I want to give Max a loving home.
+
+Status: Pending
+
+[Approve] [Decline]
