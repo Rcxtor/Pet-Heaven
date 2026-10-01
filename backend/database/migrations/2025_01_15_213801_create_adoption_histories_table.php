@@ -13,9 +13,21 @@ return new class extends Migration
     {
         Schema::create('adoption_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('pet_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->restrictOnDelete();
+
+            $table->foreignId('pet_id')
+                ->constrained()
+                ->restrictOnDelete();
+
+            $table->foreignId('adoption_request_id')
+                ->constrained()
+                ->restrictOnDelete();
+
             $table->date('adoption_date');
+
             $table->timestamps();
         });
     }

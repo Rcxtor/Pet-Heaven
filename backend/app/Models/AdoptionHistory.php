@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AdoptionHistory extends Model
 {
     protected $fillable = [
-        'pet_id','user_id','adoption_date'  
+        'pet_id','user_id','adoption_request_id','adoption_date'  
       ];
   
   

@@ -41,8 +41,7 @@ class PetController extends Controller
             'name' => 'required|string|max:255',
             'species' => 'required|string|max:255',
             'breed' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'age' => 'nullable|integer|min:0',
+            'age' => 'nullable|string|min:0',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
             'description' => 'nullable|string',
@@ -56,7 +55,6 @@ class PetController extends Controller
         $pet->breed = $request->breed;
         $pet->age = $request->age;
         $pet->size = $request->size;
-        $pet->location = $request->location;
         $pet->gender = $request->gender;
         $pet->description = $request->description;
 
@@ -89,8 +87,7 @@ class PetController extends Controller
                 'name' => 'required|string|max:255',
                 'species' => 'required|string|max:255',
                 'breed' => 'nullable|string|max:255',
-                'location' => 'nullable|string|max:255',
-                'age' => 'nullable|integer|min:0',
+                'age' => 'nullable|string|min:0',
                 'size' => 'required|in:small,medium,large',
                 'gender' => 'required|in:male,female',
                 'description' => 'nullable|string',
@@ -99,7 +96,6 @@ class PetController extends Controller
             $pet->name = $validated['name'];
             $pet->species = $validated['species'];
             $pet->breed = $validated['breed'] ?? null;
-            $pet->location = $validated['location'] ?? null;
             $pet->age = $validated['age'] ?? null;
             $pet->size = $validated['size'];
             $pet->gender = $validated['gender'];

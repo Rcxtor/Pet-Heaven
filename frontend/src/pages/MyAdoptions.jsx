@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyAdoptionRequests, deletePendingRequest } from "../services/adoptionService";
+import { getMyAdoptionRequests, cancelAdoptionRequest } from "../services/adoptionService";
 
 function MyAdoptions() {
     const [adoptions, setAdoptions] = useState([]);
@@ -33,7 +33,7 @@ function MyAdoptions() {
 
     const handleDelete = async (id) => {
         try {
-            await deletePendingRequest(id);
+            await cancelAdoptionRequest(id);
 
             setAdoptions(
                 adoptions.filter((adoption) => adoption.id !== id)

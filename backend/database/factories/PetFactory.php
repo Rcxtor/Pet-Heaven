@@ -17,9 +17,6 @@ class PetFactory extends Factory
             'species' => $this->faker->randomElement(['Dog', 'Cat','Bird', 'Rabbit','other']),
             'age' => $this->faker->numberBetween(1, 8),
             'gender' => $this->faker->randomElement(['Male', 'Female']),
-            'location' => $this->faker->randomElement([
-                'Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi', 'Khulna'
-            ]),
             'description' => $this->faker->sentence(10),
             'status' => 'available',
             'user_id' => User::where('role', 'user')->inRandomOrder()->first()->id,

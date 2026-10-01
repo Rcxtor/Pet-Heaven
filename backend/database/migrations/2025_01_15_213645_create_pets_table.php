@@ -16,14 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('species');
-            $table->string('breed')->default('Unknown');
-            $table->integer('age')->nullable();
+            $table->string('breed')->nullable();
+            $table->string('age')->nullable();
             $table->enum('size',['small','medium','large'])->default('medium');
             $table->enum('gender', ['male', 'female']);
-            $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status',['available','adopted','removed'])->default('available');
+            $table->enum('status',['available','pending_adoption','adopted','removed'])->default('available');
             $table->timestamps();
         });
     }

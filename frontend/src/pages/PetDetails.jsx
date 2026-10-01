@@ -2,14 +2,38 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPet } from "../services/petService";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { checkAdoptionProfile } from "../services/adoptionService";
 
 function ViewPet() {
     const { id } = useParams();
     const { user } = useAuth();
 
+    const navigate = useNavigate();
     const [pet, setPet] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const handleApply = async () => {
+        try {
+            await checkAdoptionProfile();
+
+            navigate(`/pet/${pet.id}/adoption-form`);
+
+        } catch (error) {
+            if (error.response?.status === 422) {
+                navigate("/profile", {
+                    state: {
+                        message: "Please fill up all the information.",
+                        returnTo: `/pet/${pet.id}`
+                    }
+                });
+
+                return;
+            }
+
+            alert("Something went wrong. Please try again.");
+        }
+    };
 
     useEffect(() => {
         async function fetchPet() {
@@ -69,10 +93,10 @@ function ViewPet() {
             )}
 
             <br />
-            {user && user.id !== pet.user_id && (
-            <Link to={`/pet/${pet.id}/adoption-form`}>
-                <button>Apply For Adoption</button>
-            </Link>
+            {user && user.id !== pet.user_id && pet.status === "available" && (
+            <button type="button"onClick={handleApply}>
+                Apply For Adoption
+            </button>
             )}
         </div>
     );

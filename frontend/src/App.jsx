@@ -10,10 +10,12 @@ import EditPet from "./pages/EditPet";
 import AdoptionForm from "./pages/Adoptions";
 import MyAdoptions from "./pages/MyAdoptions";
 import ReceivedAdoptions from "./pages/ReceivedAdoptions";
+import NotFound from "./pages/NotFound";
+import AdoptionRequestDetails from "./pages/AdoptionRequestDetails";
+import Profile from "./pages/Profile";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GuestRoute from "./routes/GuestRoute";
-
 
 function AppRoutes() {
     return (
@@ -23,6 +25,7 @@ function AppRoutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/pet/:id" element={<ViewPet />} />
                 <Route path="/pets/" element={<Pets />} />
+                <Route path="*" element={<NotFound/>}/>
                 
                 {/* auth routes */}
                 <Route path="/addPet" element={ <ProtectedRoute>< AddPet/></ProtectedRoute> } />
@@ -30,6 +33,9 @@ function AppRoutes() {
                 <Route path="/pet/:petId/adoption-form" element={<ProtectedRoute><AdoptionForm/></ProtectedRoute>} />
                 <Route path="/my-adoptions" element={<ProtectedRoute><MyAdoptions/></ProtectedRoute>} />
                 <Route path="/received-adoptions" element={<ProtectedRoute><ReceivedAdoptions/></ProtectedRoute>} />
+                <Route path="/received-adoptions/:id" element={<ProtectedRoute><AdoptionRequestDetails/></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>} />
+                
 
 
                 {/* non-auth routes */}

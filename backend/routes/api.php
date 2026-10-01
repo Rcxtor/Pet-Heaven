@@ -4,6 +4,7 @@ use App\Http\Controllers\AdoptionRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 
 
@@ -26,15 +27,29 @@ Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user'])
 // Route::middleware('auth:sanctum')->post('/addPet', [PetController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
+
+//pet routes
     Route::post('/addPet', [PetController::class, 'store']);
     // Route::put('/pet/{id}',[PetController::class,'update']);
     Route::put('/pet/{pet}', [PetController::class, 'update']);
     Route::delete('/pet/{pet}', [PetController::class, 'destroy']);
+
+//Adoption Routes
     Route::post('/adoption-form',[AdoptionRequestController::class,'store']);
+    Route::get('/adoption-requests/check-profile',[AdoptionRequestController::class, 'checkProfile']);
     Route::get('/adoption-requests', [AdoptionRequestController::class,'index']);
-    Route::delete('/adoption-requests/{id}', [AdoptionRequestController::class,'destroy']);
+    Route::patch('/adoption-requests/{id}/cancel',[AdoptionRequestController::class, 'cancel']);
     Route::get('/adoption-requests/received',[AdoptionRequestController::class, 'receivedRequests']);
-    Route::patch('/adoption-requests/{id}/approve',[AdoptionRequestController::class, 'approve']);
+    Route::patch('/adoption-requests/{id}/select',[AdoptionRequestController::class, 'select']);
+    Route::patch('/adoption-requests/{id}/cancel-selection',[AdoptionRequestController::class, 'cancelSelection']);
+    Route::patch('/adoption-requests/{id}/complete',[AdoptionRequestController::class, 'complete']);
     Route::patch('/adoption-requests/{id}/decline',[AdoptionRequestController::class, 'decline']);
+    Route::get('/adoption-requests/received/{id}',[AdoptionRequestController::class, 'receivedRequest']);
+
+//profile
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword']);
+    Route::delete('/profile', [ProfileController::class, 'destroy']);
     
 });
