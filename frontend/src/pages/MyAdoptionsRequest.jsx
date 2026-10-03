@@ -62,19 +62,16 @@ function MyAdoptions() {
                         <h2>{adoption.pet.name}</h2>
                         <h2>{adoption.pet.location}</h2>
 
-                        <p>
-                            Status: {adoption.status}
-                        </p>
-                        <p>
-                            Adoption ID: {adoption.id}
-                        </p>
+                        <p>Status: {adoption.status} </p>
+                        <p>Adoption ID: {adoption.id} </p>
 
-                        <p>
-                            Submitted:{" "}
-                            {new Date(
-                                adoption.created_at
-                            ).toLocaleDateString()}
-                        </p>
+                        {adoption.status === 'Selected' && (<div>
+                            <p>Owner Name: {adoption.pet.user.name}</p>
+                            <p>Owner Phone: {adoption.pet.user.phone}</p>
+                            <p>Owner Email: {adoption.pet.user.email}</p>
+                        </div>)}
+
+                        <p> Submitted:{" "}{new Date(adoption.created_at).toLocaleDateString()} </p>
                             
                         {adoption.status === 'Pending' && (<button type="button" onClick={() => handleDelete(adoption.id)}>
                                                                 Delete Request

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //pet routes
     Route::post('/addPet', [PetController::class, 'store']);
+    Route::get('/my-pets/',[PetController::class,'userPets']);
     // Route::put('/pet/{id}',[PetController::class,'update']);
     Route::put('/pet/{pet}', [PetController::class, 'update']);
     Route::delete('/pet/{pet}', [PetController::class, 'destroy']);
@@ -45,6 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/adoption-requests/{id}/complete',[AdoptionRequestController::class, 'complete']);
     Route::patch('/adoption-requests/{id}/decline',[AdoptionRequestController::class, 'decline']);
     Route::get('/adoption-requests/received/{id}',[AdoptionRequestController::class, 'receivedRequest']);
+
+//dashboard
+    Route::middleware('auth:sanctum')->get('/dashboard', [DashboardController::class, 'index']);
 
 //profile
     Route::get('/profile', [ProfileController::class, 'show']);

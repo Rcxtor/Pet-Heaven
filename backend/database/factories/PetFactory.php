@@ -18,6 +18,7 @@ class PetFactory extends Factory
             'age' => $this->faker->numberBetween(1, 8),
             'gender' => $this->faker->randomElement(['Male', 'Female']),
             'description' => $this->faker->sentence(10),
+            'location' => $this->faker->randomElement(['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh' ]),
             'status' => 'available',
             'user_id' => User::where('role', 'user')->inRandomOrder()->first()->id,
         ];

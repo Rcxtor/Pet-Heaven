@@ -8,10 +8,6 @@ function AdoptionForm() {
     console.log(petId);
     const [formData, setFormData] = useState({
         exp: "",
-        email: "",
-        name: "",
-        phone: "",
-        address: "",
         reason: "",
     });
 
@@ -67,57 +63,6 @@ function AdoptionForm() {
                 </select>
 
                 <br />
-
-                <label>
-                    Name
-                </label>
-
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-
-                <br />
-
-                <label>
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <br />
-
-
-                <label>
-                    Phone
-                </label>
-
-                <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                />
-                <br />
-
-
-                <label>
-                    Address
-                </label>
-
-                <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                />
-
                 <br />
 
                 <label>

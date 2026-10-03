@@ -7,7 +7,7 @@ function Navbar() {
     const navLinks = [
         { path: "/", label: "Home" },
         { path: "/pets", label: "Browse Pets" },
-        { path: "/addPet", label: "Post Pet" },
+        { path: "/add-pet", label: "Post Pet" },
     ];
 
 
@@ -34,12 +34,18 @@ function Navbar() {
                                     Logout
                                 </button>
 
-                                <Link to="/my-adoptions">
+                                <Link to="/my-requests">
                                     My Request
                                 </Link>
                                 
                                 <Link to="/received-adoptions">
                                     Received Requests
+                                </Link>
+                                <Link to="/dashboard">
+                                    Dashboard
+                                </Link>
+                                <Link to="/profile">
+                                    profile
                                 </Link>
                             </>
                         ) : (

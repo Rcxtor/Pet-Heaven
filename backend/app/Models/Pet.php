@@ -13,7 +13,7 @@ class Pet extends Model
      */
     use HasFactory;
     protected $fillable = [
-        'user_id','name','species','age','breed','description','user_id','status',     
+        'user_id','name','species','age','breed','location','description','user_id','status',     
     ];
 
     public function adoptionRequests()

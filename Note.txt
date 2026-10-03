@@ -1,19 +1,67 @@
 Dashboard
 │
-├── Welcome / User Information
+├── Welcome section
+│   └── "Welcome back, John!"
 │
 ├── Statistics
 │   ├── My Pets
+│   ├── Available Pets
 │   ├── Pending Requests
 │   └── Adopted Pets
 │
 ├── My Pets
-│   └── Recent pets added by the user
+│   ├── Pet cards
+│   └── View All
 │
 ├── Recent Adoption Requests
-│   └── Latest requests + status
+│   ├── Request
+│   ├── Pet
+│   ├── Status
+│   └── View
 │
 └── Quick Actions
     ├── Add Pet
     ├── Browse Pets
     └── My Adoption Requests
+
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  Welcome back, John!                         [ + Add Pet ]  │
+│  Manage your pets and adoption activity.                    │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  MY PETS       SENT        RECEIVED       ADOPTED           │
+│     4           3             5              2              │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  My Pets                                      [ View All ]  │
+│                                                             │
+│  [ Pet ]   [ Pet ]   [ Pet ]   [ Pet ]                     │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Recent Adoption Requests                     [ View All ]  │
+│                                                             │
+│  Luna       Sarah       Pending                              │
+│  Max        David       Approved                             │
+│  Milo       John        Pending                              │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Requests I Have Sent                         [ View All ]  │
+│                                                             │
+│  Luna       Pending                                        │
+│  Max        Approved                                       │
+│  Buddy      Rejected                                       │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Quick Actions                                               │
+│                                                             │
+│  [ Add Pet ]  [ Browse Pets ]  [ My Requests ]              │
+│                                                             │
+│  [ Adoption History ]                                       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘

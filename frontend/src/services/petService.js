@@ -29,3 +29,9 @@ export async function deletePet(id) {
     const response = await api.delete(`/pet/${id}`);
     return response.data;
 }
+
+//user pets
+export async function getUserPets() {
+  const response = await api.get(`/my-pets/`)
+  return response.data;
+}

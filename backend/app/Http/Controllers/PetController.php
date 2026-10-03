@@ -15,6 +15,11 @@ class PetController extends Controller
         $pets = Pet::where('status', 'available')->get();
         return response()->json($pets);
     }
+    public function userPets()
+    {
+        $pets = Pet::where('user_id', auth()->id())->get();
+        return response()->json($pets);
+    }
 
     /**
      * Get one pet.
@@ -44,6 +49,7 @@ class PetController extends Controller
             'age' => 'nullable|string|min:0',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
+            'location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -56,6 +62,7 @@ class PetController extends Controller
         $pet->age = $request->age;
         $pet->size = $request->size;
         $pet->gender = $request->gender;
+        $pet->location = $request->location;
         $pet->description = $request->description;
 
         if ($request->hasFile('image')) {
@@ -89,6 +96,7 @@ class PetController extends Controller
                 'breed' => 'nullable|string|max:255',
                 'age' => 'nullable|string|min:0',
                 'size' => 'required|in:small,medium,large',
+                'location' => 'required|string|max:255',
                 'gender' => 'required|in:male,female',
                 'description' => 'nullable|string',
             ]);
@@ -98,6 +106,7 @@ class PetController extends Controller
             $pet->breed = $validated['breed'] ?? null;
             $pet->age = $validated['age'] ?? null;
             $pet->size = $validated['size'];
+            $pet->location = $validated['location'];
             $pet->gender = $validated['gender'];
             $pet->description = $validated['description'] ?? null;
 
