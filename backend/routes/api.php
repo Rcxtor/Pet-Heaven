@@ -24,8 +24,9 @@ Route::get('/pets/',[PetController::class,'index']);
 
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-// Route::middleware('auth:sanctum')->post('/addPet', [PetController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
