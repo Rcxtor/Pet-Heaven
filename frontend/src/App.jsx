@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import MyPets from "./pages/MyPets";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -29,6 +30,7 @@ function AppRoutes() {
                 <Route path="/pet/:id" element={<ViewPet />} />
                 <Route path="/pets/" element={<Pets />} />
                 <Route path="*" element={<NotFound/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 
                 {/* auth routes */}
