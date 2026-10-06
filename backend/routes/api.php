@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::put('/pet/{id}',[PetController::class,'update']);
     Route::put('/pet/{pet}', [PetController::class, 'update']);
     Route::delete('/pet/{pet}', [PetController::class, 'destroy']);
+    Route::delete('/pet/{pet}/image/{image}', [PetController::class, 'deleteImage']);
+    Route::post('/pet/{pet}/images', [PetController::class, 'addImages']);
 
 //Adoption Routes
     Route::post('/adoption-form',[AdoptionRequestController::class,'store']);

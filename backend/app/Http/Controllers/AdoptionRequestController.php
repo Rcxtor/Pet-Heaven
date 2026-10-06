@@ -86,13 +86,17 @@ class AdoptionRequestController extends Controller
 
     public function index(Request $request)
     {
-        $adoptionRequests = AdoptionRequest::where('user_id', $request->user()->id)->with(['pet.user'])
+        $adoptionRequests = AdoptionRequest::where(
+            'user_id',
+            $request->user()->id
+        )
+        ->with(['pet.user', 'pet.images'])
         ->latest()
         ->get();
 
         return response()->json([
             'adoption_requests' => $adoptionRequests
-            ]);
+        ]);
     }
     
     public function cancel(Request $request, $id)
@@ -133,7 +137,7 @@ class AdoptionRequestController extends Controller
         $adoptionRequests = AdoptionRequest::whereHas('pet', function ($query) use ($request) {
             $query->where('user_id', $request->user()->id);
         })
-        ->with(['user', 'pet'])
+        ->with(['user', 'pet','pet.images'])
         ->latest()
         ->get();
 
@@ -323,7 +327,7 @@ class AdoptionRequestController extends Controller
             ->whereHas('pet', function ($query) use ($request) {
                 $query->where('user_id', $request->user()->id);
             })
-            ->with(['user', 'pet'])
+            ->with(['user', 'pet','pet.images'])
             ->firstOrFail();
 
         return response()->json([

@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {getProfile, updateProfile, changePassword, deleteAccount,} from "../services/profileService";
+import Loading from "../components/Loading";
+
+const inputClass ="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed";
+const labelClass = "block text-sm font-semibold text-gray-700 mb-1.5";
+const primaryBtn ="bg-brand-700 hover:bg-brand-800 text-white font-semibold px-6 py-2.5 rounded-lg transition shadow-md hover:shadow-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed";
+const secondaryBtn = "border-2 border-gray-200 hover:border-brand-700 text-gray-700 hover:text-brand-700 font-semibold px-6 py-2.5 rounded-lg transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed";
+const cardClass = "bg-white border border-gray-200 rounded-2xl p-6 shadow-sm";
 
 function Profile() {
 
@@ -60,7 +67,11 @@ function Profile() {
             setLoading(false);
         }
     };
-
+    useEffect(() => {
+        if (user?.name) {
+            document.title = `${user.name.split(' ')[0]+"'s Profile"} - PetHeaven`;
+        }
+        }, [user]);
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
 
@@ -184,7 +195,7 @@ function Profile() {
     };
 
     if (loading) {
-        return <p>Loading profile...</p>;
+            return <Loading/>;
     }
 
     if (!user) {
@@ -192,191 +203,186 @@ function Profile() {
     }
 
     return (
-        <div>
-
-            <h1>My Profile</h1>
-
+        <div className="fade-in max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+            <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
             {location.state?.returnTo && (
-                <button type="button" onClick={() => { navigate(location.state.returnTo);}}>
+                <button type="button" onClick={() => { navigate(location.state.returnTo); }} className="text-sm font-semibold text-brand-700 hover:underline">
                     ← Back
                 </button>
             )}
 
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
-
-            {!editing ? (
-                <div>
-
-                    <h2>Personal Information</h2>
-
-                    <p>
-                        <strong>Name:</strong> {user.name}
-                    </p>
-
-                    <p>
-                        <strong>Email:</strong> {user.email}
-                    </p>
-
-                    <p>
-                        <strong>Phone:</strong>{" "}
-                        {user.phone || "Not provided"}
-                    </p>
-
-                    <p>
-                        <strong>City:</strong>{" "}
-                        {user.city || "Not provided"}
-                    </p>
-
-                    <button
-                        type="button"
-                        onClick={() => setEditing(true)}
-                    >
-                        Edit Profile
-                    </button>
-
-                </div>
-            ) : (
-                <form onSubmit={handleUpdateProfile}>
-
-                    <h2>Edit Profile</h2>
-
-                    <div>
-                        <label>Name</label>
-
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>Email</label>
-
-                        <input
-                            type="email"
-                            value={user.email}
-                            disabled
-                        />
-
-                        <small>
-                            Email cannot be changed here.
-                        </small>
-                    </div>
-
-                    <div>
-                        <label>Phone</label>
-
-                        <input
-                            type="text"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>City</label>
-
-                        <input
-                            type="text"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={saving}
-                    >
-                        {saving ? "Saving..." : "Save Changes"}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={handleCancelEdit}
-                        disabled={saving}
-                    >
-                        Cancel
-                    </button>
-
-                </form>
+            {message && (
+                <p className="bg-green-100 text-green-700 text-sm font-medium px-4 py-3 rounded-lg">
+                    {message}
+                </p>
             )}
-            <div>
-                <h2>Change Password</h2>
+            {error && (
+                <p className="bg-red-100 text-red-700 text-sm font-medium px-4 py-3 rounded-lg">
+                    {error}
+                </p>
+            )}
+
+            {/* Personal info */}
+            <div className={cardClass}>
+                {!editing ? (
+                    <div>
+                        <h2 className="text-lg font-bold text-gray-900 mb-4">
+                            Personal Information
+                        </h2>
+
+                        <dl className="space-y-3 text-gray-600">
+                            <div className="flex gap-2">
+                                <dt className="w-20 font-semibold text-gray-900">Name</dt>
+                                <dd>{user.name}</dd>
+                            </div>
+                            <div className="flex gap-2">
+                                <dt className="w-20 font-semibold text-gray-900">Email</dt>
+                                <dd>{user.email}</dd>
+                            </div>
+                            <div className="flex gap-2">
+                                <dt className="w-20 font-semibold text-gray-900">Phone</dt>
+                                <dd>{user.phone || "Not provided"}</dd>
+                            </div>
+                            <div className="flex gap-2">
+                                <dt className="w-20 font-semibold text-gray-900">City</dt>
+                                <dd>{user.city || "Not provided"}</dd>
+                            </div>
+                        </dl>
+
+                        <button
+                            type="button"
+                            onClick={() => setEditing(true)}
+                            className={`${secondaryBtn} mt-6`}
+                        >
+                            Edit Profile
+                        </button>
+                    </div>
+                ) : (
+                    <form onSubmit={handleUpdateProfile} className="space-y-4">
+                        <h2 className="text-lg font-bold text-gray-900">Edit Profile</h2>
+
+                        <div>
+                            <label className={labelClass}>Name</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className={inputClass}
+                            />
+                        </div>
+
+                        <div>
+                            <label className={labelClass}>Email</label>
+                            <input
+                                type="email"
+                                value={user.email}
+                                disabled
+                                className={inputClass}
+                            />
+                            <small className="text-gray-500 text-xs mt-1 block">
+                                Email cannot be changed here.
+                            </small>
+                        </div>
+
+                        <div>
+                            <label className={labelClass}>Phone</label>
+                            <input
+                                type="text"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className={inputClass}
+                            />
+                        </div>
+
+                        <div>
+                            <label className={labelClass}>City</label>
+                            <input
+                                type="text"
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                className={inputClass}
+                            />
+                        </div>
+
+                        <div className="flex gap-3 pt-2">
+                            <button type="submit" disabled={saving} className={primaryBtn}>
+                                {saving ? "Saving..." : "Save Changes"}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleCancelEdit}
+                                disabled={saving}
+                                className={secondaryBtn}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                )}
+            </div>
+
+            {/* Change password */}
+            <div className={cardClass}>
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Change Password</h2>
 
                 {passwordMessage && (
-                    <p>{passwordMessage}</p>
+                    <p className="bg-green-100 text-green-700 text-sm font-medium px-4 py-3 rounded-lg mb-4">
+                        {passwordMessage}
+                    </p>
                 )}
-
                 {passwordError && (
-                    <p>{passwordError}</p>
+                    <p className="bg-red-100 text-red-700 text-sm font-medium px-4 py-3 rounded-lg mb-4">
+                        {passwordError}
+                    </p>
                 )}
 
-                <form onSubmit={handleChangePassword}>
-
+                <form onSubmit={handleChangePassword} className="space-y-4">
                     <div>
-                        <label>Current Password</label>
-
+                        <label className={labelClass}>Current Password</label>
                         <input
                             type="password"
                             value={currentPassword}
-                            onChange={(e) =>
-                                setCurrentPassword(e.target.value)
-                            }
+                            onChange={(e) => setCurrentPassword(e.target.value)}
                             required
+                            className={inputClass}
                         />
                     </div>
 
                     <div>
-                            <label>New Password</label>
-
+                        <label className={labelClass}>New Password</label>
                         <input
                             type="password"
                             value={newPassword}
-                            onChange={(e) =>
-                                setNewPassword(e.target.value)
-                            }
+                            onChange={(e) => setNewPassword(e.target.value)}
                             required
+                            className={inputClass}
                         />
                     </div>
 
                     <div>
-                        <label>Confirm New Password</label>
-
+                        <label className={labelClass}>Confirm New Password</label>
                         <input
                             type="password"
                             value={confirmPassword}
-                            onChange={(e) =>
-                                setConfirmPassword(e.target.value)
-                            }
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             required
+                            className={inputClass}
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={changingPassword}
-                    >
-                        {changingPassword
-                            ? "Changing..."
-                            : "Change Password"}
+                    <button type="submit" disabled={changingPassword} className={primaryBtn}>
+                        {changingPassword ? "Changing..." : "Change Password"}
                     </button>
-
                 </form>
             </div>
 
-            {/* delete account */}
-            <div>
-                <h2>Danger Zone</h2>
+            {/* Delete account */}
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
+                <h2 className="text-lg font-bold text-red-700 mb-2">Danger Zone</h2>
 
-                <p>
-                    Deleting your account is permanent.
-                </p>
-
-                <p>
-                    You cannot delete your account while you own
-                    pets or have adoption history.
+                <p className="text-gray-700 text-sm">Deleting your account is permanent.</p>
+                <p className="text-gray-600 text-sm mt-1">
+                    You cannot delete your account while you own pets or have adoption history.
                 </p>
 
                 {!deleteOpen ? (
@@ -386,14 +392,15 @@ function Profile() {
                             setDeleteOpen(true);
                             setDeleteError("");
                         }}
+                        className="mt-5 border-2 border-red-300 hover:bg-red-600 hover:border-red-600 text-red-600 hover:text-white font-semibold px-6 py-2.5 rounded-lg transition cursor-pointer"
                     >
                         Delete Account
                     </button>
                 ) : (
-                    <div>
-                        <h3>Confirm Account Deletion</h3>
+                    <div className="mt-5 space-y-3">
+                        <h3 className="font-bold text-gray-900">Confirm Account Deletion</h3>
 
-                        <p>
+                        <p className="text-sm text-gray-700">
                             Type <strong>DELETE</strong> to confirm.
                         </p>
 
@@ -402,33 +409,37 @@ function Profile() {
                             value={deleteText}
                             onChange={(e) => setDeleteText(e.target.value)}
                             placeholder="Type DELETE"
+                            className={inputClass}
                         />
 
                         {deleteError && (
-                            <p>{deleteError}</p>
+                            <p className="bg-red-100 text-red-700 text-sm font-medium px-4 py-3 rounded-lg">
+                                {deleteError}
+                            </p>
                         )}
 
-                        <button
-                            type="button"
-                            onClick={handleDeleteAccount}
-                            disabled={deleting}
-                        >
-                            {deleting
-                                ? "Deleting..."
-                                : "DELETE ACCOUNT"}
-                        </button>
-
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setDeleteOpen(false);
-                                setDeleteText("");
-                                setDeleteError("");
-                            }}
-                            disabled={deleting}
-                        >
-                            Cancel
-                        </button>
+                        <div className="flex gap-3">
+                            <button
+                                type="button"
+                                onClick={handleDeleteAccount}
+                                disabled={deleting}
+                                className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2.5 rounded-lg transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                {deleting ? "Deleting..." : "DELETE ACCOUNT"}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setDeleteOpen(false);
+                                    setDeleteText("");
+                                    setDeleteError("");
+                                }}
+                                disabled={deleting}
+                                className={secondaryBtn}
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createAdoptionRequest } from "../services/adoptionService";
+import BackButton from "../components/BackButton";
 
 function AdoptionForm() {
     const { petId } = useParams();
@@ -42,44 +43,56 @@ function AdoptionForm() {
         }
         navigate(`/pet/${petId}`);
     };
-
+    useEffect(() => {
+            document.title = "Adoption Form - PetHeaven";
+        }, []);
     return (
-        <div>
-            <h1>Adoption Form</h1>
+        <div className="fade-in  max-w-xl mx-auto px-4 sm:px-6 py-10">
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Do you have experience with pets?
-                </label>
+            <div className="mb-8">
+                <h1 className="text-2xl font-bold text-gray-900">Adoption Form</h1>
+                <p className="text-gray-500 text-sm mt-1">Tell us a little about yourself</p>
+            </div>
+            <BackButton/>
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-card shadow-md border border-gray-100 p-6 sm:p-8 space-y-5">
 
-                <select
-                    name="exp"
-                    value={formData.exp}
-                    onChange={handleChange}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Do you have experience with pets?
+                    </label>
+                    <select
+                        name="exp"
+                        value={formData.exp}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-white cursor-pointer"
+                    >
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Why do you want to adopt this pet?
+                    </label>
+                    <textarea
+                        name="reason"
+                        rows="4"
+                        placeholder="Tell us why you'd be a great match..."
+                        value={formData.reason}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm resize-none"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full bg-brand-700 hover:bg-brand-800 text-white font-semibold py-3 rounded-lg transition shadow-sm cursor-pointer"
                 >
-                    <option value="">Select an option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-
-                <br />
-                <br />
-
-                <label>
-                    Why do you want to adopt this pet?
-                </label>
-                <br />
-
-                <textarea
-                    name="reason"
-                    value={formData.reason}
-                    onChange={handleChange}
-                />
-                <br />
-
-                <button type="submit">
                     Submit Adoption Request
                 </button>
+
             </form>
         </div>
     );

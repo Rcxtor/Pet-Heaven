@@ -1,4 +1,6 @@
 1. can add feature like number of view/ wishlist or even click the pet got
-2. forget password
+2. forget password (done)
 3. message system
-4. userService.js
+4. userService.js (done)
+5. image of pet need to fix both on edit pet and addpet and details (done)
+6.profile image

@@ -35,3 +35,14 @@ export async function getUserPets() {
   const response = await api.get(`/my-pets/`)
   return response.data;
 }
+
+//imae delete
+export async function deletePetImage(petId, imageId) {
+    const response = await api.delete(`/pet/${petId}/image/${imageId}`);
+    return response.data;
+}
+//add image
+export async function addPetImages(petId, formData) {
+    const response = await api.post(`/pet/${petId}/images`, formData);
+    return response.data;
+}

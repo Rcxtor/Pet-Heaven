@@ -27,6 +27,7 @@ class DashboardController extends Controller
 
         // Latest 4 pets
         $myPets = Pet::where('user_id', $user->id)
+            ->with('images')
             ->latest()
             ->take(4)
             ->get();
@@ -36,6 +37,7 @@ class DashboardController extends Controller
         $requestsReceived = AdoptionRequest::whereHas('pet', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })
+        ->with(['pet.images', 'user'])
         ->latest()
         ->take(4)
         ->get();
@@ -43,6 +45,7 @@ class DashboardController extends Controller
 
         // Latest 4 requests sent
         $requestsSent = AdoptionRequest::where('user_id', $user->id)
+            ->with('pet.images')
             ->latest()
             ->take(4)
             ->get();
