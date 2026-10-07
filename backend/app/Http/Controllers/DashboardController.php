@@ -22,7 +22,9 @@ class DashboardController extends Controller
             $query->where('user_id', $user->id);
         })->count();
 
-        $adoptedPetsCount = AdoptionHistory::where('user_id', $user->id)->count();
+        // $adoptedPetsCount = AdoptionHistory::where('user_id', $user->id)->count(); /// NEED TO FIX
+        $adoptedPetsCount = AdoptionHistory::where('adopter_id', $user->id)->count();
+        // $adoptedPetsCount = 2;
 
 
         // Latest 4 pets

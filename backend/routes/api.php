@@ -50,9 +50,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/adoption-requests/{id}/complete',[AdoptionRequestController::class, 'complete']);
     Route::patch('/adoption-requests/{id}/decline',[AdoptionRequestController::class, 'decline']);
     Route::get('/adoption-requests/received/{id}',[AdoptionRequestController::class, 'receivedRequest']);
+    Route::get('/adoption-history', [AdoptionRequestController::class, 'adoptionHistory']);
+    Route::get('/adoption-history/{id}', [AdoptionRequestController::class, 'adoptionHistoryDetails']);
 
 //dashboard
-    Route::middleware('auth:sanctum')->get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
 //profile
     Route::get('/profile', [ProfileController::class, 'show']);

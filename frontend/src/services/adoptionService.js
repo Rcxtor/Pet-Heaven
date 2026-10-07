@@ -49,3 +49,13 @@ export async function checkAdoptionProfile() {
     const response = await api.get("/adoption-requests/check-profile");
     return response.data;
 }
+
+export const getAdoptionHistory = async (type = "adopted") => {
+    const response = await api.get("/adoption-history", {params: { type },});
+    return response.data;
+};
+
+export const getAdoptionHistoryDetails = async (id) => {
+    const response = await api.get(`/adoption-history/${id}`);
+    return response.data;
+};

@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('adoption_histories', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
+            $table->foreignId('pet_id')
                 ->constrained()
                 ->restrictOnDelete();
 
-            $table->foreignId('pet_id')
-                ->constrained()
+            $table->foreignId('adopter_id')
+                ->constrained('users')
+                ->restrictOnDelete();
+
+            $table->foreignId('previous_owner_id')
+                ->constrained('users')
                 ->restrictOnDelete();
 
             $table->foreignId('adoption_request_id')

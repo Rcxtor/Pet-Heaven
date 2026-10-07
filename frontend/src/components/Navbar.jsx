@@ -5,7 +5,7 @@ import logo from "../assets/logo.png";
 
 function Navbar() {
 
-    const { user, logout } = useAuth();
+    const { user, logout, loading } = useAuth();
     const location = useLocation();   
     const navLinks = [
         { path: "/", label: "Home" },
@@ -63,56 +63,91 @@ function Navbar() {
                     </div>
 
                     {/* Right Part */}
+                        {/* <Link to="/favorites" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition" >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </Link> */}
                     <div className="hidden md:flex items-center gap-5">
-                        {user ? (
+                        {/* {loading ? null : user ? ( */}
+                        {loading ? (
+                                <div className="w-20 h-8 rounded-lg bg-gray-100 animate-pulse" />
+                            ) : user ? (
                             <>
-                            {/* <Link to="/favorites" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition" >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                            </Link> */}
-                            <span className="hidden lg:block text-sm text-brand-600">
-                                Welcome, <span className="font-bold text-brand-600">{user.name.split(" ")[0].charAt(0).toUpperCase() + user.name.split(" ")[0].slice(1)}</span>
-                            </span>
-                            <div className="relative" ref={dropdownRef}>
-                                <button onClick={() => setOpen(!open)} className="w-9 h-9 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm hover:ring-2 hover:ring-brand-200 transition cursor-pointer">
-                                    {user.name.charAt(0).toUpperCase()}
-                                </button>
+                                <span className="hidden lg:block text-sm text-brand-600">
+                                    Welcome,{" "}
+                                    <span className="font-bold text-brand-600">
+                                        {user.name.split(" ")[0].charAt(0).toUpperCase() +
+                                            user.name.split(" ")[0].slice(1)}
+                                    </span>
+                                </span>
 
-                                {open && (
-                                    <div className="absolute right-0 top-12 w-48 bg-white rounded-xl border border-gray-100 shadow-lg py-2 z-50">
-                                        <Link to="/dashboard" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                            Dashboard
-                                        </Link>
-                                        <Link to="/my-pets" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                            My Pets
-                                        </Link>
-                                        <Link to="/adoption-requests" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                            Adoption Requests
-                                        </Link>
-                                        <Link to="/profile" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                            Edit Profile
-                                        </Link>
-                                        <hr className="my-1 border-gray-100" />
-                                        <button
-                                            onClick={() => {
-                                                setOpen(false);
-                                                logout();
-                                            }}
-                                            className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                                <div className="relative" ref={dropdownRef}>
+                                    <button
+                                        onClick={() => setOpen(!open)}
+                                        className="w-9 h-9 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-sm hover:ring-2 hover:ring-brand-200 transition cursor-pointer"
+                                    >
+                                        {user.name.charAt(0).toUpperCase()}
+                                    </button>
+
+                                    {open && (
+                                        <div className="absolute right-0 top-12 w-48 bg-white rounded-xl border border-gray-100 shadow-lg py-2 z-50">
+                                            <Link
+                                                to="/dashboard"
+                                                onClick={() => setOpen(false)}
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                                             >
-                                            Logout
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                            
+                                                Dashboard
+                                            </Link>
+
+                                            <Link
+                                                to="/my-pets"
+                                                onClick={() => setOpen(false)}
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                            >
+                                                My Pets
+                                            </Link>
+
+                                            <Link
+                                                to="/adoption-requests"
+                                                onClick={() => setOpen(false)}
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                            >
+                                                Adoption Requests
+                                            </Link>
+
+                                            <Link
+                                                to="/profile"
+                                                onClick={() => setOpen(false)}
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                            >
+                                                Edit Profile
+                                            </Link>
+
+                                            <hr className="my-1 border-gray-100" />
+
+                                            <button
+                                                onClick={() => {
+                                                    setOpen(false);
+                                                    logout();
+                                                }}
+                                                className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                                            >
+                                                Logout
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-brand-700">
+                                <Link
+                                    to="/login"
+                                    className="text-sm font-medium text-gray-600 hover:text-brand-700"
+                                >
                                     Login
                                 </Link>
+
                                 <Link
                                     to="/register"
                                     className="bg-brand-700 hover:bg-brand-800 text-white text-sm font-semibold px-5 py-2 rounded-lg transition shadow-sm hover:shadow-md"

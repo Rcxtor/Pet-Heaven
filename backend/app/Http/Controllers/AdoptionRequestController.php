@@ -282,9 +282,9 @@ class AdoptionRequestController extends Controller
             $pet->update([
                 'status' => 'adopted',
             ]);
-
-             AdoptionHistory::create([
-                'user_id' => $adoptionRequest->user_id,
+            AdoptionHistory::create([
+                'adopter_id' => $adoptionRequest->user_id,
+                'previous_owner_id' => $pet->user_id,
                 'pet_id' => $adoptionRequest->pet_id,
                 'adoption_request_id' => $adoptionRequest->id,
                 'adoption_date' => now()->toDateString(),
@@ -332,6 +332,60 @@ class AdoptionRequestController extends Controller
 
         return response()->json([
             'adoption_request' => $adoptionRequest
+        ]);
+    }
+
+    // History
+    public function adoptionHistory(Request $request)
+    {
+        $user = $request->user();
+
+        $type = $request->query('type', 'adopted');
+
+        $query = AdoptionHistory::with([
+            'pet.images',
+            'adopter',
+            'previousOwner',
+        ]);
+
+        if ($type === 'adopted') {
+            $query->where('adopter_id', $user->id);
+        } elseif ($type === 'rehomed') {
+            $query->where('previous_owner_id', $user->id);
+        } else {
+            return response()->json([
+                'message' => 'Invalid history type.'
+            ], 422);
+        }
+
+        $history = $query
+            ->latest('adoption_date')
+            ->get();
+
+        return response()->json([
+            'history' => $history
+        ]);
+    }
+
+    public function adoptionHistoryDetails(Request $request, $id)
+    {
+        $user = $request->user();
+
+        $history = AdoptionHistory::with([
+            'pet.images',
+            'adopter',
+            'previousOwner',
+            'adoptionRequest',
+        ])
+        ->where('id', $id)
+        ->where(function ($query) use ($user) {
+            $query->where('adopter_id', $user->id)
+                ->orWhere('previous_owner_id', $user->id);
+        })
+        ->firstOrFail();
+
+        return response()->json([
+            'history' => $history
         ]);
     }
 }
