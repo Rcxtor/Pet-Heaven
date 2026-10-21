@@ -1,4 +1,4 @@
-1. can add feature like number of view/ wishlist or even click the pet got
+1. can add feature like number of view/ wishlist or even click the pet got // pet view counter // wishlist counter // most popular pets(category)
 3. message system
 6.profile image
 7. reactive ui
