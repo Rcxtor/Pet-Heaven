@@ -7,18 +7,58 @@ import { checkAdoptionProfile } from "../services/adoptionService";
 import BackButton from "../components/BackButton";
 import { getImageUrl } from "../utils/imageUrl";
 import Loading from "../components/Loading"
+import { useFavorites } from "../context/FavoritesContext";
+import {addFavorite, removeFavorite,} from "../services/petService";
 
 function ViewPet() {
     const { id } = useParams();
     const { user } = useAuth();
 
     const navigate = useNavigate();
-
+    
     const [pet, setPet] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // Currently selected image
     const [selectedImage, setSelectedImage] = useState(0);
+    const {token, loading: authLoading } = useAuth();
+
+    const {isFavorite,addFavoriteLocally,removeFavoriteLocally,} = useFavorites();
+
+    const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+    const saved = pet ? isFavorite(pet.id) : false;
+
+    const handleToggleFavorite = async () => {
+        if (favoriteLoading || authLoading) return;
+
+        if (!token || !user) {
+            navigate("/login");
+            return;
+        }
+
+        setFavoriteLoading(true);
+
+        try {
+            if (saved) {
+                await removeFavorite(pet.id);
+                removeFavoriteLocally(pet.id);
+            } else {
+                await addFavorite(pet.id);
+                addFavoriteLocally(pet.id);
+            }
+        } catch (error) {
+            console.error("Failed to update favorite:", error);
+
+            alert(
+                error.response?.data?.message ||
+                "Could not update favorites. Please try again."
+            );
+        } finally {
+            setFavoriteLoading(false);
+        }
+    };
+    
 
     const handleApply = async () => {
         try {
@@ -162,12 +202,31 @@ function ViewPet() {
                             {pet.name}
                         </h1>
 
-                        {pet.status === "adopted" && (
-                            <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-green-100 text-green-700">
-                                Adopted
-                            </span>
-                        )}
+                        <div className="flex items-center gap-3 shrink-0">
 
+                            {/* Favorite button */}
+                            <button type="button" onClick={handleToggleFavorite} disabled={favoriteLoading || authLoading} aria-label={
+                                    saved
+                                        ? `Remove ${pet.name} from favorites`
+                                        : `Add ${pet.name} to favorites`
+                                }
+                                aria-pressed={saved} title={saved ? "Remove from favorites": "Add to favorites"}
+                                className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition disabled:opacity-50"
+                            >
+                                <svg
+                                    className={`w-6 h-6 ${saved ? "text-red-500" : "text-gray-400"}`} fill={saved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+
+                            {pet.status === "adopted" && (
+                                <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-green-100 text-green-700">
+                                    Adopted
+                                </span>
+                            )}
+
+                        </div>
                     </div>
 
                     <div className="flex flex-wrap gap-3 mt-4">

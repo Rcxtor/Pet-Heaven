@@ -1,4 +1,10 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useFavorites } from "../context/FavoritesContext";
+import {addFavorite,removeFavorite,} from "../services/petService";
+import { getImageUrl } from "../utils/imageUrl";
 
 function PetCard({ pet, imageUrl }) {
     const emoji =
@@ -8,15 +14,67 @@ function PetCard({ pet, imageUrl }) {
         pet.species?.toLowerCase() === "fish" ? "🐟" :
         pet.species?.toLowerCase() === "rabbit" ? "🐰" :
         pet.species?.toLowerCase() === "hamster" ? "🐹" : "🐾";
+    
+    
+        const navigate = useNavigate();
+        const { user, token, loading: authLoading } = useAuth();
+
+        const { isFavorite, addFavoriteLocally,removeFavoriteLocally,} = useFavorites();
+
+        const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+        const saved = isFavorite(pet.id);
+
+        const handleToggleFavorite = async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (favoriteLoading) return;
+
+            if (authLoading) return;
+
+            if (!token || !user) {
+                navigate("/login");
+                return;
+            }
+
+            setFavoriteLoading(true);
+
+            try {
+                if (saved) {
+                    await removeFavorite(pet.id);
+                    removeFavoriteLocally(pet.id);
+                } else {
+                    await addFavorite(pet.id);
+                    addFavoriteLocally(pet.id);
+                }
+            } catch (error) {
+                console.error("Failed to update favorite:", error);
+
+                alert(
+                    error.response?.data?.message ||
+                    "Could not update favorites. Please try again."
+                );
+            } finally {
+                setFavoriteLoading(false);
+            }
+        };
+
+        const firstImage = pet.images?.[0]?.image_path || pet.image;
+        const resolvedImageUrl = imageUrl || getImageUrl(firstImage);
 
     return (
         <div className="relative bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
             <Link to={`/pet/${pet.id}`} className="block">
-
+               
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
-                    {imageUrl ? (
-                        <img src={imageUrl} alt={pet.name} className="w-full h-full object-cover"/>
+                    {resolvedImageUrl ? (
+                        <img
+                            src={resolvedImageUrl}
+                            alt={pet.name}
+                            className="w-full h-full object-cover"
+                        />
                     ) : (
                         <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
                             No image
@@ -56,7 +114,7 @@ function PetCard({ pet, imageUrl }) {
                             {pet.location || "Not specified"}
                         </span>
                         <span className="flex items-center gap-1">
-                            📏 {pet.size.charAt(0).toUpperCase() + pet.size.slice(1) || "Not specified"}
+                            📏 {pet.size ? pet.size.charAt(0).toUpperCase() + pet.size.slice(1): "Not specified"}
                         </span>
                     </div>
                     <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
@@ -66,15 +124,37 @@ function PetCard({ pet, imageUrl }) {
             </Link>
 
             {/* Dummy heart button */}
+            
             <button
                 type="button"
-                aria-label="Add to favorites"
-                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow-sm hover:scale-110 transition cursor-pointer"
+                aria-label={
+                    saved
+                        ? `Remove ${pet.name} from favorites`
+                        : `Add ${pet.name} to favorites`
+                }
+                aria-pressed={saved}
+                title={saved ? "Remove from favorites" : "Add to favorites"}
+                disabled={favoriteLoading || authLoading}
+                onClick={handleToggleFavorite}
+                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow-sm hover:scale-110 transition disabled:opacity-50"
             >
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg
+                    className={`w-5 h-5 transition-colors ${
+                        saved ? "text-red-500" : "text-gray-400"
+                    }`}
+                    fill={saved ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
                 </svg>
             </button>
+
         </div>
     );
 }

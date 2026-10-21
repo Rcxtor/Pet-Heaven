@@ -39,6 +39,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/pet/{pet}/image/{image}', [PetController::class, 'deleteImage']);
     Route::post('/pet/{pet}/images', [PetController::class, 'addImages']);
 
+// Favorites
+    Route::get('/favorites', [PetController::class, 'favoriteIndex']);
+    Route::post('/favorites/{pet}', [PetController::class, 'addFavorite']);
+    Route::delete('/favorites/{pet}', [PetController::class, 'removeFavorite']);
+
 //Adoption Routes
     Route::post('/adoption-form',[AdoptionRequestController::class,'store']);
     Route::get('/adoption-requests/check-profile',[AdoptionRequestController::class, 'checkProfile']);

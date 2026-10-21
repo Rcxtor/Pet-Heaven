@@ -19,6 +19,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import AdoptionRequests from "./pages/AdoptionRequests";
 import AdoptionHistory from "./pages/AdoptionHistory";
+import Favorites from "./pages/Favorites";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -47,6 +48,7 @@ function AppRoutes() {
                 <Route path="/my-pets" element={<ProtectedRoute><MyPets/></ProtectedRoute>} />
                 <Route path="/adoption-requests" element={<ProtectedRoute><AdoptionRequests/></ProtectedRoute>} />
                 <Route path="/adoption-history" element={<ProtectedRoute><AdoptionHistory/></ProtectedRoute>} />
+                <Route path="/favorites" element={<ProtectedRoute><Favorites/></ProtectedRoute>} />
                 
 
 

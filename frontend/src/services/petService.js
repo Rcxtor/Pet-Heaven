@@ -46,3 +46,21 @@ export async function addPetImages(petId, formData) {
     const response = await api.post(`/pet/${petId}/images`, formData);
     return response.data;
 }
+
+// Get user's favorites
+export const getFavorites = async () => {
+    const response = await api.get("/favorites");
+    return response.data.favorites;
+};
+
+// Add a pet to favorites
+export const addFavorite = async (petId) => {
+    const response = await api.post(`/favorites/${petId}`);
+    return response.data;
+};
+
+// Remove a pet from favorites
+export const removeFavorite = async (petId) => {
+    const response = await api.delete(`/favorites/${petId}`);
+    return response.data;
+};

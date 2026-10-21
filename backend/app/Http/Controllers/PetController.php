@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Pet;
 use App\Models\PetImage;
+use App\Models\Favorite;
 
 class PetController extends Controller
 {
@@ -236,4 +237,49 @@ class PetController extends Controller
             'pet' => $pet->load('images'),
         ]);
     }
+
+    public function favoriteIndex(Request $request)
+    {
+        // $favorites = Favorite::where('user_id', $request->user()->id)->with(['pet.images'])->latest()->get();
+
+        // return response()->json([
+        //     'favorites' => $favorites,
+        // ]);
+        $favorites = Favorite::where('user_id', $request->user()->id)
+            ->with(['pet.images'])
+            ->latest()
+            ->get();
+
+        return response()->json(['favorites' => $favorites]);
+    }
+
+    public function addFavorite(Request $request, Pet $pet)
+    {
+        $favorite = Favorite::firstOrCreate([
+            'user_id' => $request->user()->id,
+            'pet_id' => $pet->id,
+            ]);
+            
+            return response()->json([
+                'message' => $favorite->wasRecentlyCreated
+                ? 'Pet added to favorites.'
+                : 'Pet is already in favorites.',
+                'favorite' => $favorite->load('pet.images'),
+                ], $favorite->wasRecentlyCreated ? 201 : 200);
+    }
+    public function removeFavorite(Request $request, Pet $pet)
+    {
+        $deleted = Favorite::where('user_id',$request->user()->id)->where('pet_id',$pet->id)->delete();
+
+        if (!$deleted) {
+            return response()->json([
+                'message' => 'Pet is not in your favorites.',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Pet removed from favorites.',
+        ]);
+    }
+
 }

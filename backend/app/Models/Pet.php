@@ -38,4 +38,8 @@ class Pet extends Model
     {
         return $this->hasMany(PetImage::class);
     }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

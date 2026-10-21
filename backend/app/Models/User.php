@@ -56,6 +56,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pet::class); // A user can have many pets
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
