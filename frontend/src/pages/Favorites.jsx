@@ -30,8 +30,6 @@ export default function Favorites() {
 
             try {
                 const data = await getFavorites();
-                console.log("Favorites API response:", data);
-
                 if (!cancelled) {
                     // The API returns favorite records, each containing a pet.
                     setFavorites(data.map((favorite) => favorite.pet).filter(Boolean));

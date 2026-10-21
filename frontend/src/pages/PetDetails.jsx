@@ -194,7 +194,7 @@ function ViewPet() {
                 </div>
 
                 {/* Info */}
-                <div className=" shadow-md px-6 rounded-2xl py-2">
+                <div className=" shadow-md px-6 rounded-2xl py-2 pb-10">
 
                     <div className="flex  items-start justify-between gap-4">
 

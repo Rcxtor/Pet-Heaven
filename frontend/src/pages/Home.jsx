@@ -114,7 +114,8 @@ function Home() {
                             />
                         </div>
                     </div> */}
-                    <div className="flex-1 flex justify-center">
+
+                    <div className="flex-1 flex justify-center w-full">
                         <div className="relative w-full max-w-md">
                             <div className="absolute -inset-4 bg-brand-200/30 rounded-[2rem] rotate-3"></div>
 

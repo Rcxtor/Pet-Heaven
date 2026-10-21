@@ -13,8 +13,16 @@ function Navbar() {
         { path: "/add-pet", label: "Post Pet" },
     ];
 
+    const userLinks = [
+        { path: "/dashboard", label: "Dashboard" },
+        { path: "/favorites", label: "Favorites" },
+        { path: "/my-pets", label: "My Pets" },
+        { path: "/adoption-requests", label: "Adoption Requests" },
+        { path: "/profile", label: "Edit Profile" },
+    ];
 
     const [open, setOpen] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -26,6 +34,14 @@ function Navbar() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    useEffect(() => {
+        setMobileOpen(false);
+    }, [location.pathname]);
+
+    const firstName = user
+        ? user.name.split(" ")[0].charAt(0).toUpperCase() + user.name.split(" ")[0].slice(1)
+        : "";
 
     return (
         // <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -72,8 +88,7 @@ function Navbar() {
                                 <span className="hidden lg:block text-sm text-brand-600">
                                     Welcome,{" "}
                                     <span className="font-bold text-brand-600">
-                                        {user.name.split(" ")[0].charAt(0).toUpperCase() +
-                                            user.name.split(" ")[0].slice(1)}
+                                        {firstName}
                                     </span>
                                 </span>
 
@@ -87,7 +102,7 @@ function Navbar() {
 
                                     {open && (
                                         <div className="absolute right-0 top-12 w-48 bg-white rounded-xl border border-gray-100 shadow-lg py-2 z-50">
-                                            <Link
+                                            {/* <Link
                                                 to="/dashboard"
                                                 onClick={() => setOpen(false)}
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
@@ -125,7 +140,17 @@ function Navbar() {
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                                             >
                                                 Edit Profile
-                                            </Link>
+                                            </Link> */}
+                                            {userLinks.map((link) => (
+                                                <Link
+                                                    key={link.path}
+                                                    to={link.path}
+                                                    onClick={() => setOpen(false)}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                                >
+                                                    {link.label}
+                                                </Link>
+                                            ))}
 
                                             <hr className="my-1 border-gray-100" />
 
@@ -165,7 +190,89 @@ function Navbar() {
                             </>
                         )}
                     </div>
+                     {/* HAMBURGER (mobile only) */}
+                    <button
+                        onClick={() => setMobileOpen(!mobileOpen)}
+                        className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+                        aria-label="Toggle menu"
+                        aria-expanded={mobileOpen}
+                    >
+                        {mobileOpen ? (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
+                    </button>
                 </div>
+                {/* MOBILE PANEL */}
+                {mobileOpen && (
+                    <div className="md:hidden border-t border-gray-100 py-3 space-y-1">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.path}
+                                to={link.path}
+                                className={`block px-3 py-2 rounded-lg text-sm font-medium ${
+                                    location.pathname === link.path
+                                        ? "bg-brand-50 text-brand-700"
+                                        : "text-gray-600 hover:bg-gray-50"
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+
+                        <hr className="my-2 border-gray-100" />
+
+                        {loading ? (
+                            <div className="mx-3 w-24 h-8 rounded-lg bg-gray-100 animate-pulse" />
+                        ) : user ? (
+                            <>
+                                <p className="px-3 py-1 text-sm text-brand-600">
+                                    Welcome, <span className="font-bold">{firstName}</span>
+                                </p>
+
+                                {userLinks.map((link) => (
+                                    <Link
+                                        key={link.path}
+                                        to={link.path}
+                                        className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+
+                                <button
+                                    onClick={() => {
+                                        setMobileOpen(false);
+                                        logout();
+                                    }}
+                                    className="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <div className="flex gap-3 px-3 pt-1">
+                                <Link
+                                    to="/login"
+                                    className="flex-1 text-center py-2 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="flex-1 text-center py-2 text-sm font-semibold text-white bg-brand-700 rounded-lg"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </nav>
     );
