@@ -15,6 +15,10 @@ Pet Heaven is a full-stack web application designed to connect pet owners with p
 - **User Dashboard** — Access personalized information and adoption-related activities.
 - **Pet Status Management** — Manage pet availability throughout the adoption process.
 
+## For Testing (FactoryDefault)
+  - email: test@example.com
+  - password: password123
+
 ## 🛠️ Technologies Used
 
 ### Frontend
@@ -56,7 +60,7 @@ Make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Rcxtor/Pet-Heaven
 cd pet-heaven
 ```
 
