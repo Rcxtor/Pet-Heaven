@@ -14,7 +14,7 @@ export async function getPet(id) {
 
 // All pets
 export async function getallPet() {
-  const response = await api.get(`/pets/`)
+  const response = await api.get(`/pets`)
   return response.data;
 }
 
